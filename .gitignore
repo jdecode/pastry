@@ -2,8 +2,8 @@
 /public/hot
 /public/storage
 /storage/*.key
-/storage/
-/bootstrap/
+/storage/*
+/bootstrap/*
 /vendor
 .env
 .env.backup
