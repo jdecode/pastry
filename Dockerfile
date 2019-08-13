@@ -1,6 +1,6 @@
 # Use the official PHP 7.2 image.
 # https://hub.docker.com/_/php
-FROM php:7.1-apache
+FROM php:7.2-apache
 
 # Copy local code to the container image.
 COPY . /var/www/html/
@@ -28,7 +28,7 @@ RUN apt-get update \
     && apt-get -y install autoconf libz-dev php7.1-dev php-pear \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
-RUN pecl install grpc
+#RUN pecl install grpc
 #RUN docker-php-ext-install pdo_mysql
 
 RUN ls -al
