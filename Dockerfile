@@ -17,6 +17,7 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 #ARG GOOGLE_CLOUD_PROJECT
 
 #RUN sed -ri -e 's/project_id/${GOOGLE_CLOUD_PROJECT}/g' .env
+RUN composer install -n --prefer-dist
 
 RUN chown -R www-data:www-data storage bootstrap
 
