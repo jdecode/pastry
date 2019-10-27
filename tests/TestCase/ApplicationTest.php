@@ -12,6 +12,7 @@
  * @since         3.3.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Test\TestCase;
 
 use App\Application;
@@ -27,7 +28,6 @@ use InvalidArgumentException;
  */
 class ApplicationTest extends IntegrationTestCase
 {
-
     /**
      * testBootstrap
      *
