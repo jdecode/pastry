@@ -19,6 +19,7 @@ use Cake\Datasource\ConnectionManager;
 use Cake\Error\Debugger;
 use Cake\Http\Exception\NotFoundException;
 
+//throw new Exception('Pastry Sentry error: ' . Cake\Chronos\Chronos::now());
 $this->layout = false;
 
 if (!Configure::read('debug')) :
@@ -140,9 +141,9 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
             $errorMsg = $connectionError->getMessage();
             if (method_exists($connectionError, 'getAttributes')) :
                 $attributes = $connectionError->getAttributes();
-                if (isset($errorMsg['message'])) :
+            if (isset($errorMsg['message'])) :
                     $errorMsg .= '<br />' . $attributes['message'];
-                endif;
+            endif;
             endif;
         }
         ?>
