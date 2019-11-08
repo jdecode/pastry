@@ -52,7 +52,6 @@ class Application extends BaseApplication
         }
 
         // Load more plugins here
-        $this->addPlugin('CakeDC/Users', ['routes' => true]);
     }
 
     /**
