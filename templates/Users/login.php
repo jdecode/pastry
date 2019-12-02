@@ -11,8 +11,12 @@
             <fieldset>
                 <legend><?= __('Login') ?></legend>
                 <?php
-                    echo $this->Form->control('username');
-                    echo $this->Form->control('password');
+                echo $this->Form->control('username');
+                echo $this->Form->control('password');
+                echo $this->Form->control('referer', [
+                    'type' => 'hidden',
+                    'value' => $this->getRequest()->getSession()->read('Login.Referer')
+                ]);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Login')) ?>

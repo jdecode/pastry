@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -12,10 +13,9 @@ use Cake\Event\EventInterface;
  *
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class UsersController extends AppController
-{
-    public function beforeFilter(EventInterface $event)
-    {
+class UsersController extends AppController {
+
+    public function beforeFilter(EventInterface $event) {
         parent::beforeFilter($event);
         $this->Authentication->allowUnauthenticated(['login']);
     }
@@ -25,12 +25,12 @@ class UsersController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function login()
-    {
+    public function login() {
         $result = $this->Authentication->getResult();
-        // If the user is logged in send them away.
+        // If the user is logged in, send to referer, configured login-redirect page or to /users, in that order
         if ($result->isValid()) {
-            $target = $this->Authentication->getLoginRedirect() ?? '/users';
+            $target = $this->getRequest()->getSession()->read('Login.Referer') ?? $this->Authentication->getLoginRedirect() ?? '/users';
+            $this->getRequest()->getSession()->delete('Login.Referer');
             return $this->redirect($target);
         }
         if ($this->request->is('post') && !$result->isValid()) {
@@ -38,8 +38,7 @@ class UsersController extends AppController
         }
     }
 
-    public function logout()
-    {
+    public function logout() {
         $this->Authentication->logout();
         return $this->redirect(['controller' => 'Users', 'action' => 'login']);
     }
@@ -49,8 +48,7 @@ class UsersController extends AppController
      *
      * @return \Cake\Http\Response|null
      */
-    public function index()
-    {
+    public function index() {
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));
@@ -63,8 +61,7 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $user = $this->Users->get($id, [
             'contain' => [],
         ]);
@@ -77,8 +74,7 @@ class UsersController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
@@ -99,8 +95,7 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $user = $this->Users->get($id, [
             'contain' => [],
         ]);
@@ -123,8 +118,7 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
@@ -135,4 +129,5 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

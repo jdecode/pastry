@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -29,6 +30,7 @@ use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
+use App\Middleware\RedirectMiddleware;
 
 /**
  * Application setup class.
@@ -36,16 +38,15 @@ use Psr\Http\Message\ServerRequestInterface;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication implements AuthenticationServiceProviderInterface
-{
+class Application extends BaseApplication implements AuthenticationServiceProviderInterface {
+
     /**
      * Returns a service provider instance.
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request Request
      * @return \Authentication\AuthenticationServiceInterface
      */
-    public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
-    {
+    public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface {
         $service = new AuthenticationService();
 
         $fields = [
@@ -69,8 +70,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     /**
      * {@inheritDoc}
      */
-    public function bootstrap(): void
-    {
+    public function bootstrap(): void {
         // Call parent to load bootstrap from files.
         parent::bootstrap();
 
@@ -96,17 +96,17 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
      * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
      * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
      */
-    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
-    {
+    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue {
         $middlewareQueue
+            ->add(new AuthenticationMiddleware($this))
             // Catch any exceptions in the lower layers,
             // and make an error page/response
             ->add(new ErrorHandlerMiddleware(null, Configure::read('Error')))
 
             // Handle plugin/theme assets like CakePHP normally does.
             ->add(new AssetMiddleware([
-                'cacheTime' => Configure::read('Asset.cacheTime'),
-            ]))
+                    'cacheTime' => Configure::read('Asset.cacheTime'),
+                ]))
 
             // Add routing middleware.
             // If you have a large number of routes connected, turning on routes
@@ -115,7 +115,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // using it's second constructor argument:
             // `new RoutingMiddleware($this, '_cake_routes_')`
             ->add(new RoutingMiddleware($this))
-            ->add(new AuthenticationMiddleware($this));
+            ->add(new RedirectMiddleware($this));
 
         return $middlewareQueue;
     }
@@ -123,8 +123,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     /**
      * @return void
      */
-    protected function bootstrapCli(): void
-    {
+    protected function bootstrapCli(): void {
         try {
             $this->addPlugin('Bake');
         } catch (MissingPluginException $e) {
@@ -135,4 +134,5 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
         // Load more plugins here
     }
+
 }

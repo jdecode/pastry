@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -18,6 +19,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Event\EventInterface;
 
 /**
  * Application Controller
@@ -27,8 +29,8 @@ use Cake\Controller\Controller;
  *
  * @link https://book.cakephp.org/4/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
-{
+class AppController extends Controller {
+
     /**
      * Initialization hook method.
      *
@@ -38,13 +40,14 @@ class AppController extends Controller
      *
      * @return void
      */
-    public function initialize(): void
-    {
+    public function initialize(): void {
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
-        $this->loadComponent('Authentication.Authentication');
+        $this->loadComponent('Authentication.Authentication', [
+            'requireIdentity' => false,
+        ]);
 
         /*
          * Enable the following component for recommended CakePHP security settings.
@@ -52,4 +55,19 @@ class AppController extends Controller
          */
         $this->loadComponent('Security');
     }
+
+    public function beforeFilter(EventInterface $event) {
+        $controller = strtolower($this->request->getParam('controller'));
+        $action = strtolower($this->request->getParam('action'));
+        $result = $this->Authentication->getResult();
+        if (!$result->isValid()) {
+            if (($controller === 'users' && $action === 'login')) {
+                // Log this to see which page is being most requested before session getting expired
+            } else {
+                $this->getRequest()->getSession()->write('Login.Referer', filter_input(INPUT_SERVER, 'REQUEST_URI'));
+                return $this->redirect('/users/login');
+            }
+        }
+    }
+
 }

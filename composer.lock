@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "97b28b2fcc68c139a7ca4419d8f51a5b",
+    "content-hash": "134bcf34d95a31f9b514c2f1aac44e8c",
     "packages": [
         {
             "name": "aura/intl",
@@ -357,6 +357,39 @@
                 "tls"
             ],
             "time": "2019-08-30T08:44:50+00:00"
+        },
+        {
+            "name": "jdecode/pastries",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jdecode/pastries.git",
+                "reference": "796274eebfb9660dc4da49391c14b6874b96be81"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jdecode/pastries/zipball/796274eebfb9660dc4da49391c14b6874b96be81",
+                "reference": "796274eebfb9660dc4da49391c14b6874b96be81",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "jdecode\\pastries\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jagdeep Singh",
+                    "email": "jdecode@gmail.com"
+                }
+            ],
+            "description": "Cake(PHP) utilities, hence, pastries",
+            "time": "2019-12-02T17:23:46+00:00"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -4636,6 +4669,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "cakephp/cakephp": 20,
+        "jdecode/pastries": 20,
         "cakephp/bake": 20,
         "cakephp/cakephp-codesniffer": 20,
         "cakephp/debug_kit": 20,
