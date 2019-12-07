@@ -41,9 +41,15 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <div class="top-nav-title">
                 <a href="/"><span>K</span>A</a>
             </div>
-            <div class="top-nav-links">
-                <a href="/"><span>Kuotes</span>Admin</a>
-            </div>
+            <?php
+            if ($this->Identity->isLoggedIn()) {
+                ?>
+                <div class="top-nav-links">
+                    <a href="/users/logout"><span>Logout</span></a>
+                </div>
+                <?php
+            }
+            ?>
         </nav>
         <main class="main">
             <div class="container">
