@@ -1,3 +1,4 @@
 module.exports = {
-    'outputDir': 'webroot/vue'
+    outputDir: 'webroot/vue',
+    runtimeCompiler: true
 }
