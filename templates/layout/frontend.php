@@ -1,3 +1,6 @@
+<?php
+use Cake\Routing\Router;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,15 +8,15 @@
     <title>
         <?= $this->fetch('title') ?> | Vue
     </title>
-    <link href="img/kode.png" type="image/png" rel="icon" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link href="<?= Router::url('/') ?>img/kode.png" type="image/png" rel="icon" />
+    <link rel="stylesheet" href="<?= Router::url('/') ?>css/style.css" />
+    <script type="text/javascript" defer src="<?= Router::url('/') ?>webroot/vue/js/chunk-vendors.js"></script>
+    <script type="text/javascript" defer src="<?= Router::url('/') ?>webroot/vue/js/app.js"></script>
 </head>
-<body>
+<body class="bg-gray-600">
     <?php //echo $this->fetch('content')?>
     <div id="dashboard">
         {{ message }}
     </div>
-    <script src="webroot/vue/js/chunk-vendors.js"></script>
-    <script src="webroot/vue/js/app.js"></script>
 </body>
 </html>
