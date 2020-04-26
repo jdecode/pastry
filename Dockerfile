@@ -1,4 +1,4 @@
-FROM jdecode/koder:0.2
+FROM jdecode/kode:2.1
 
 ## Run following when a composer dependency is changed
 COPY composer.json /var/www/html/
