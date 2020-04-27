@@ -7,7 +7,7 @@ servers:
 paths:
   /:
     get:
-      summary: 'Home page'
+      summary: 'Home page index'
       operationId: listUser
       tags:
         - user
