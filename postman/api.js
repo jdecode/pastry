@@ -3,11 +3,11 @@ info:
   version: 1.0.0
   title: pastry
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'pastry.konnector.dev'
 paths:
-  /user:
+  /:
     get:
-      summary: 'Sample endpoint: Returns details about a particular user'
+      summary: 'Home page'
       operationId: listUser
       tags:
         - user
